@@ -9,6 +9,7 @@ import { useStore } from '@/store/useStore';
 import type { NexusCore, DNAStrand, FamilyNode } from '@/types';
 import { AGENT_PROFILES } from '@/types';
 import { Heart, Dna, ArrowRight, Loader2, Sparkles, ChevronLeft } from 'lucide-react';
+import { saveOrganism } from '@/lib/supabase';
 
 interface DebateEntry {
   agent: string;
@@ -136,6 +137,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
         };
         setChildOrganism(child);
         addOrganism(child);
+        saveOrganism(child).catch(console.error);
       }
 
       setPhase('born');

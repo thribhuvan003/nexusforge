@@ -132,3 +132,34 @@ export async function saveOrganism(organism: NexusCore) {
     return false; // Handled by Zustand persistence
   }
 }
+
+export async function fetchOrganismById(id: string): Promise<NexusCore | null> {
+  try {
+    const { data, error } = await supabase
+      .from('organisms')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) throw error;
+    return data as NexusCore;
+  } catch (e) {
+    console.warn(`Failed to fetch organism ${id} from Supabase:`, e);
+    return MOCK_ORGANISMS.find(o => o.id === id) || null;
+  }
+}
+
+export async function fetchPublicOrganisms(limit = 10): Promise<NexusCore[]> {
+  try {
+    const { data, error } = await supabase
+      .from('organisms')
+      .select('*')
+      .eq('is_public', true)
+      .limit(limit);
+      
+    if (error) throw error;
+    return data as NexusCore[];
+  } catch (e) {
+    console.warn("Supabase fetch failed, falling back to mock organisms:", e);
+    return MOCK_ORGANISMS.slice(0, limit);
+  }
+}

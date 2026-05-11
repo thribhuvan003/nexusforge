@@ -118,26 +118,51 @@ export default function MeshPage() {
             />
           </div>
 
-          {/* 3D Canvas Area */}
-          <div className="flex-1 min-h-[500px] border-4 border-dashed border-white/20 relative cursor-crosshair">
-            {loading ? (
-              <div className="absolute inset-0 flex items-center justify-center font-sans font-black text-4xl text-[var(--brand-lime)] animate-pulse uppercase">
-                <Activity className="mr-4 animate-spin" size={48} /> SYNCHRONIZING WITH SUPABASE...
+          <div className="flex-1 flex flex-col md:flex-row gap-4 min-h-[500px]">
+            {/* DOM-based List Sidebar */}
+            <div className="w-full md:w-1/3 bg-black border-4 border-white/20 flex flex-col overflow-hidden">
+              <div className="p-3 bg-white/10 border-b-4 border-white/20 font-sans font-black text-white uppercase text-sm tracking-widest">
+                INDEXED NODES ({filtered.length})
               </div>
-            ) : (
-              <Canvas camera={{ position: [0, 0, 50], fov: 60 }}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} />
-                <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
-                
-                {filtered.map((org) => (
-                  <MeshNode key={org.id} org={org} onSelect={setSelectedOrg} />
+              <div className="flex-1 overflow-y-auto hide-scrollbar p-2 space-y-2">
+                {filtered.map(org => (
+                  <button
+                    key={`dom-${org.id}`}
+                    onClick={() => setSelectedOrg(org)}
+                    className={`w-full text-left p-3 border-2 transition-colors ${
+                      selectedOrg?.id === org.id 
+                        ? 'border-[var(--brand-lime)] bg-[var(--brand-lime)]/20 text-white' 
+                        : 'border-white/10 hover:border-white/40 text-[var(--text-secondary)] hover:text-white'
+                    }`}
+                  >
+                    <div className="font-sans font-black uppercase truncate text-lg">{org.name}</div>
+                    <div className="text-xs truncate font-bold opacity-70 mt-1">{org.tagline}</div>
+                  </button>
                 ))}
+              </div>
+            </div>
 
-                {/* Grid Helper to make it look brutal and technical */}
-                <gridHelper args={[200, 50, 0xffffff, 0x333333]} position={[0, -20, 0]} />
-              </Canvas>
-            )}
+            {/* 3D Canvas Area */}
+            <div className="flex-1 border-4 border-dashed border-white/20 relative cursor-crosshair">
+              {loading ? (
+                <div className="absolute inset-0 flex items-center justify-center font-sans font-black text-4xl text-[var(--brand-lime)] animate-pulse uppercase text-center p-6">
+                  <Activity className="mr-4 animate-spin inline" size={48} /> SYNCHRONIZING WITH SUPABASE...
+                </div>
+              ) : (
+                <Canvas camera={{ position: [0, 0, 50], fov: 60 }}>
+                  <ambientLight intensity={0.5} />
+                  <pointLight position={[10, 10, 10]} intensity={1} />
+                  <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
+                  
+                  {filtered.map((org) => (
+                    <MeshNode key={org.id} org={org} onSelect={setSelectedOrg} />
+                  ))}
+
+                  {/* Grid Helper to make it look brutal and technical */}
+                  <gridHelper args={[200, 50, 0xffffff, 0x333333]} position={[0, -20, 0]} />
+                </Canvas>
+              )}
+            </div>
           </div>
         </div>
 

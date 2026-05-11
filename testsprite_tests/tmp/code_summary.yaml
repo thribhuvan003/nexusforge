@@ -1,0 +1,222 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js 16 (App Router)
+  - React 19
+  - Tailwind CSS v4
+  - Framer Motion
+  - Zustand (global state)
+  - Supabase (postgres + pgvector)
+  - Google Gemini AI (@google/genai)
+  - Three.js / React Three Fiber
+  - TanStack React Query
+  - Lucide React Icons
+
+routes:
+  - path: /
+    file: src/app/page.tsx
+    auth_required: false
+    description: Landing/hero page showcasing NexusForge features and CTAs
+  - path: /create
+    file: src/app/create/page.tsx
+    auth_required: false
+    description: Birth a new idea organism - input seed text to create a new organism
+  - path: /organisms
+    file: src/app/organisms/page.tsx
+    auth_required: false
+    description: List all organisms in bio-storage
+  - path: /organism/[id]
+    file: src/app/organism/[id]/page.tsx
+    auth_required: false
+    description: Individual organism detail page with DNA, agents, family tree, and analytics tabs
+  - path: /mesh
+    file: src/app/mesh/page.tsx
+    auth_required: false
+    description: 3D interactive mesh of all public organisms
+  - path: /breed
+    file: src/app/breed/page.tsx
+    auth_required: false
+    description: Breed/synthesize two organisms together
+  - path: /synthesize
+    file: src/app/synthesize/page.tsx
+    auth_required: false
+    description: Synthesize organisms using vector proximity
+
+features:
+  - name: Home / Landing Page
+    description: Marketing landing page with hero, features, how-it-works sections, and navigation CTAs
+    files:
+      - src/app/page.tsx
+    entry_route: /
+    user_interactions:
+      - View hero section with headline and tagline
+      - Click "BIRTH AN IDEA" CTA button to navigate to /create
+      - Click "EXPLORE THE MESH" button to navigate to /mesh
+      - Scroll through features section
+      - Scroll through "How It Operates" steps section
+      - Click footer navigation links (GitHub, Bio-Storage, The Mesh)
+    api_calls: []
+    auth_required: false
+
+  - name: Create / Birth Organism
+    description: User inputs a raw idea seed to create a new organism; triggers AI birth via API
+    files:
+      - src/app/create/page.tsx
+      - src/app/api/birth/route.ts
+    entry_route: /create
+    user_interactions:
+      - Type seed idea text into the input/textarea
+      - Click "BIRTH AN IDEA" or submit button
+      - See loading/generating state
+      - Get redirected to the organism detail page on success
+    api_calls:
+      - method: POST
+        endpoint: /api/birth
+    auth_required: false
+
+  - name: Organism List (Bio-Storage)
+    description: Lists all created organisms with their stats and navigation to detail pages
+    files:
+      - src/app/organisms/page.tsx
+    entry_route: /organisms
+    user_interactions:
+      - Browse grid of organism cards
+      - Click on an organism card to navigate to /organism/[id]
+    api_calls: []
+    auth_required: false
+
+  - name: Organism Detail - DNA Core Tab
+    description: Shows organism DNA strands with type, label, content, and generation; supports copy
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/components/OrganismAvatar.tsx
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - View organism header with name, generation, stats
+      - Click "DNA CORE" tab to view DNA strands
+      - Click copy icon on a DNA strand to copy content
+      - Observe copied checkmark feedback
+    api_calls: []
+    auth_required: false
+
+  - name: Organism Detail - Force Evolution
+    description: Triggers AI evolution of an organism, adding new DNA mutations
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/app/api/evolve/route.ts
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "FORCE EVOLUTION" button
+      - See loading spinner with "EVOLVING..." text
+      - Observe new DNA strands added to organism after success
+    api_calls:
+      - method: POST
+        endpoint: /api/evolve
+    auth_required: false
+
+  - name: Organism Detail - Trigger Dream
+    description: Triggers AI dream sequence to generate narrative DNA fragments for organism
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/app/api/dream/route.ts
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "TRIGGER DREAM" button
+      - See loading spinner with "DREAMING..." text
+      - Observe new dream DNA strands added after success
+    api_calls:
+      - method: POST
+        endpoint: /api/dream
+    auth_required: false
+
+  - name: Organism Detail - Export Data
+    description: Opens export modal to download organism data
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/components/ExportModal.tsx
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "EXPORT DATA" button
+      - View ExportModal overlay
+      - Close the modal
+    api_calls: []
+    auth_required: false
+
+  - name: Organism Detail - Swarm Agents Tab
+    description: Interactive AI agent chat for the organism
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/components/AgentChat.tsx
+      - src/app/api/agents/chat/route.ts
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "SWARM AGENTS" tab
+      - Type a message in the agent chat input
+      - Submit message and see agent response
+    api_calls:
+      - method: POST
+        endpoint: /api/agents/chat
+    auth_required: false
+
+  - name: Organism Detail - Family Tree Tab
+    description: Visual family tree showing organism evolution history
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/components/FamilyTree.tsx
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "FAMILY TREE" tab
+      - View family tree visualization with nodes and edges
+    api_calls: []
+    auth_required: false
+
+  - name: Organism Detail - Analytics/Telemetry Tab
+    description: Analytics dashboard showing organism growth metrics
+    files:
+      - src/app/organism/[id]/page.tsx
+      - src/components/AnalyticsDashboard.tsx
+    entry_route: /organism/nexus-1778519558047-g39zhxlml
+    user_interactions:
+      - Click "TELEMETRY" tab
+      - View analytics charts and stats
+    api_calls: []
+    auth_required: false
+
+  - name: 3D Mesh Explorer
+    description: Interactive 3D visualization of all public organisms
+    files:
+      - src/app/mesh/page.tsx
+    entry_route: /mesh
+    user_interactions:
+      - Navigate to /mesh page
+      - View 3D interactive organism mesh
+      - Click on organism nodes
+    api_calls: []
+    auth_required: false
+
+  - name: Breed Organisms
+    description: Allows breeding/fusing two organisms semantically
+    files:
+      - src/app/breed/page.tsx
+      - src/app/api/breed/route.ts
+    entry_route: /breed
+    user_interactions:
+      - Select two organisms to breed
+      - Click breed/synthesize button
+      - See new offspring organism created
+    api_calls:
+      - method: POST
+        endpoint: /api/breed
+    auth_required: false
+
+known_limitations:
+  - issue: Organism state stored in Zustand (client-side); organism not found if ID not in store
+    location: src/app/organism/[id]/page.tsx
+    impact: Direct URL navigation to organism page may show "Organism Void" if state is not hydrated
+  - issue: Evolution and Dream APIs depend on Google Gemini AI key availability
+    location: src/app/api/evolve/route.ts, src/app/api/dream/route.ts
+    impact: If API key is missing or quota exceeded, evolution/dream will fail silently
+  - issue: 3D Mesh may not render on low-powered devices or without WebGL support
+    location: src/app/mesh/page.tsx
+    impact: Blank page or error for users without hardware acceleration

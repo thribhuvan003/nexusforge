@@ -1,14 +1,35 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import ClientLayout from '@/components/ClientLayout';
 import OrganismAvatar from '@/components/OrganismAvatar';
 import { Plus, Dna, ChevronRight } from 'lucide-react';
+import { fetchPublicOrganisms } from '@/lib/supabase';
+import { NexusCore } from '@/types';
 
 export default function OrganismsPage() {
-  const { organisms } = useStore();
+  const { organisms, addOrganism } = useStore();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (organisms.length === 0 && !loading) {
+      setLoading(true);
+      fetchPublicOrganisms(5).then(publicOrgs => {
+        if (publicOrgs && publicOrgs.length > 0) {
+          // Add them to the store to populate bio-storage
+          publicOrgs.forEach(org => {
+            // Avoid duplicates
+            if (!organisms.find(o => o.id === org.id)) {
+               addOrganism(org);
+            }
+          });
+        }
+      }).catch(console.error).finally(() => setLoading(false));
+    }
+  }, [organisms, loading, addOrganism]);
 
   return (
     <ClientLayout>

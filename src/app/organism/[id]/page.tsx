@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, use } from 'react';
+import { useState, use, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@/store/useStore';
@@ -11,21 +11,50 @@ import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 import FamilyTree from '@/components/FamilyTree';
 import OrganismAvatar from '@/components/OrganismAvatar';
 import { Dna, Brain, GitBranch, Download, BarChart3, Zap, Moon, ArrowLeft, Loader2, ChevronRight, Copy, Check } from 'lucide-react';
-import type { DNAStrand } from '@/types';
+import type { DNAStrand, NexusCore } from '@/types';
+import { fetchOrganismById, saveOrganism } from '@/lib/supabase';
 
 type Tab = 'dna' | 'agents' | 'tree' | 'analytics';
 
 export default function OrganismPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  const { organisms, updateOrganism } = useStore();
-  const organism = organisms.find(o => o.id === id);
+  const { organisms, updateOrganism, addOrganism } = useStore();
+  const storeOrganism = organisms.find(o => o.id === id);
+  const [organism, setOrganism] = useState<NexusCore | null>(storeOrganism || null);
+  const [isLoading, setIsLoading] = useState(!storeOrganism);
+
+  useEffect(() => {
+    if (!storeOrganism) {
+      setIsLoading(true);
+      fetchOrganismById(id).then((fetchedOrg) => {
+        if (fetchedOrg) {
+          setOrganism(fetchedOrg);
+          addOrganism(fetchedOrg); // Sync back to store
+        }
+        setIsLoading(false);
+      });
+    } else {
+      setOrganism(storeOrganism);
+    }
+  }, [id, storeOrganism, addOrganism]);
 
   const [activeTab, setActiveTab] = useState<Tab>('dna');
   const [isEvolving, setIsEvolving] = useState(false);
   const [isDreaming, setIsDreaming] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
+
+  if (isLoading) {
+    return (
+      <ClientLayout>
+        <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-[var(--bg-abyss)] px-6">
+          <Loader2 size={48} className="animate-spin text-[var(--brand-lime)]" />
+          <h2 className="heading-bold text-[var(--brand-lime)] uppercase tracking-tighter">Accessing Nexus...</h2>
+        </div>
+      </ClientLayout>
+    );
+  }
 
   if (!organism) {
     return (
@@ -64,7 +93,7 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
         ...(data.improvement ? [{ ...data.improvement, id: `dna-imp-${Date.now()}`, generation: data.new_generation || organism.generation + 1, created_at: now }] : []),
       ];
 
-      updateOrganism(id, {
+      const updatedData = {
         dna: newDna,
         generation: data.new_generation || organism.generation + 1,
         mutations: organism.mutations + 1,
@@ -72,9 +101,16 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
         updated_at: now,
         family_tree: [...organism.family_tree, {
           id: `ft-${Date.now()}`, nexus_id: id, parent_ids: [], generation: data.new_generation || organism.generation + 1,
-          label: data.summary || 'Evolution', type: 'evolution', summary: data.summary || 'Evolved', created_at: now,
+          label: data.summary || 'Evolution', type: 'evolution' as const, summary: data.summary || 'Evolved', created_at: now,
         }],
-      });
+      };
+      
+      updateOrganism(id, updatedData);
+      
+      // Persist to Supabase
+      const newOrganismState = { ...organism, ...updatedData };
+      setOrganism(newOrganismState);
+      saveOrganism(newOrganismState).catch(console.error);
     } catch (err) {
       console.error('Evolution failed:', err);
     } finally {
@@ -106,14 +142,21 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
         ...(data.insight ? [{ id: `insight-${Date.now()}`, label: 'Dream Insight', content: data.insight, type: 'concept' as const, generation: organism.generation, created_at: now }] : []),
       ];
 
-      updateOrganism(id, {
+      const updatedDreamData = {
         dna: [...(organism.dna || []), ...dreamDna],
         updated_at: now,
         family_tree: [...organism.family_tree, {
           id: `ft-dream-${Date.now()}`, nexus_id: id, parent_ids: [], generation: organism.generation,
-          label: data.title || 'Dream', type: 'dream', summary: data.insight || 'Dreamed', created_at: now,
+          label: data.title || 'Dream', type: 'dream' as const, summary: data.insight || 'Dreamed', created_at: now,
         }],
-      });
+      };
+      
+      updateOrganism(id, updatedDreamData);
+      
+      // Persist to Supabase
+      const newDreamState = { ...organism, ...updatedDreamData };
+      setOrganism(newDreamState);
+      saveOrganism(newDreamState).catch(console.error);
     } catch (err) {
       console.error('Dream failed:', err);
     } finally {

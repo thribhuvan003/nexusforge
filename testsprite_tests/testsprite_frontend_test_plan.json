@@ -1,0 +1,1104 @@
+[
+  {
+    "id": "TC001",
+    "title": "Create a new organism from a raw idea seed",
+    "description": "This verifies that a visitor can submit an idea seed and arrive at a newly created organism detail page with DNA Core visible.",
+    "category": "Create / Birth Organism",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the idea seed field with a raw organism concept"
+      },
+      {
+        "type": "action",
+        "description": "Submit the creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the DNA Core tab content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Birth an organism from the landing page",
+    "description": "This verifies that a visitor can start from the landing page, create a new organism from a raw idea seed, and reach the new organism detail page with DNA Core available.",
+    "category": "Organism Detail - DNA Core",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the primary call to create an organism"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the idea seed field with a raw concept for a new organism"
+      },
+      {
+        "type": "action",
+        "description": "Submit the creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the DNA Core tab is available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Create a new organism from the landing page",
+    "description": "This verifies that a visitor can turn a raw idea into a newly created organism and reach its detail page with DNA available to inspect.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the primary action to begin creating an organism"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a raw idea seed into the seed field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the organism creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify DNA strands are displayed for the created organism"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Inspect the DNA Core on a created organism",
+    "description": "This verifies that a user can open a newly created organism and inspect the baseline DNA Core content on its detail page.",
+    "category": "Organism Detail - DNA Core",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the primary call to create an organism"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the idea seed field with a raw concept for a new organism"
+      },
+      {
+        "type": "action",
+        "description": "Submit the creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify DNA Core data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Force evolution and see new DNA mutations appear",
+    "description": "This verifies that a user can trigger evolution from an organism detail page and observe new DNA strands added afterward.",
+    "category": "Organism Detail - Force Evolution",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Click the Force Evolution action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an evolving state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify new DNA strands are displayed after evolution"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Open the export data modal and close it",
+    "description": "This verifies that a user can open the organism export experience from a detail page and dismiss the modal overlay.",
+    "category": "Organism Detail - Export Data",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "action",
+        "description": "Click the export data action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the export modal overlay is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Close the export modal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the export modal is no longer displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "See creation progress while an organism is being born",
+    "description": "This verifies that submitting a valid idea seed shows a generating state before the organism is created.",
+    "category": "Create / Birth Organism",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the idea seed field with a raw organism concept"
+      },
+      {
+        "type": "action",
+        "description": "Submit the creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a creation progress state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the page is still focused on the birth flow until creation completes"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Trigger a dream and see dream DNA fragments appear",
+    "description": "This verifies that a user can trigger a dream sequence from an organism detail page and observe new dream DNA fragments afterward.",
+    "category": "Organism Detail - Trigger Dream",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Click the Trigger Dream action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a dreaming state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify new dream DNA strands are displayed after the dream"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Chat with the swarm agents from an organism detail page",
+    "description": "This verifies that a user can switch to the swarm agents tab, send a message, and see an agent response in the chat.",
+    "category": "Organism Detail - Swarm Agents Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "action",
+        "description": "Click the swarm agents tab"
+      },
+      {
+        "type": "action",
+        "description": "Type a message into the agent chat input"
+      },
+      {
+        "type": "action",
+        "description": "Submit the chat message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an agent response is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the chat conversation remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Open DNA Core for an existing organism and inspect its strands",
+    "description": "This verifies that a user can open an organism from bio-storage and view its DNA core content on the detail page.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Open the DNA Core tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify DNA strands are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism metadata is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Trigger evolution and see new DNA strands appear",
+    "description": "This verifies that the Force Evolution action updates the organism with additional DNA strands.",
+    "category": "Organism List (Bio-Storage)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Click an organism card"
+      },
+      {
+        "type": "action",
+        "description": "Trigger Force Evolution from the organism detail page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a new evolution result is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify additional DNA strands are visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Trigger dream and see new organism state appear",
+    "description": "This verifies that the Trigger Dream action produces a visible organism update on the detail page.",
+    "category": "Organism List (Bio-Storage)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Click an organism card"
+      },
+      {
+        "type": "action",
+        "description": "Trigger Dream from the organism detail page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a dream result is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism state has updated"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Open Swarm Agents chat and send a message",
+    "description": "This verifies that a user can switch to the Swarm Agents tab, send a chat message, and see an agent response appear in the conversation.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Open the Swarm Agents tab"
+      },
+      {
+        "type": "action",
+        "description": "Send a chat message to the agents"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sent message is visible in the conversation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an agent response is visible in the conversation"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Continue from swarm agents to family tree inspection",
+    "description": "This verifies that a user can use the organism chat area and then inspect the organism’s lineage in the family tree tab.",
+    "category": "Organism Detail - Family Tree Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "action",
+        "description": "Click the family tree tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the family tree visualization is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism lineage nodes are visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Open an organism from bio-storage",
+    "description": "This verifies that a user can browse the organism list and open an organism detail page from a card.",
+    "category": "Organism List (Bio-Storage)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Click an organism card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism identity section is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Browse public organisms from bio-storage to a detail page",
+    "description": "This verifies that a user can navigate from the organism list into an organism detail page and inspect the selected organism.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism cards are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Browse bio-storage and open an organism detail page",
+    "description": "This verifies that a user can navigate from the organism list to a specific organism’s detail page for deeper inspection.",
+    "category": "Organism List",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism DNA information is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Breed two organisms into a new offspring",
+    "description": "A user can choose two organisms, start breeding, and see a new offspring organism created.",
+    "category": "Breed Organisms",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /breed"
+      },
+      {
+        "type": "action",
+        "description": "Select the first organism"
+      },
+      {
+        "type": "action",
+        "description": "Select the second organism"
+      },
+      {
+        "type": "action",
+        "description": "Start the breeding process"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a new offspring organism is created"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the offspring is available for further viewing"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Keep the user in the create flow after completion when no redirect occurs",
+    "description": "This verifies that the create experience remains usable after a completed birth flow and the user can continue from the creation page.",
+    "category": "Create / Birth Organism",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the idea seed field with a raw organism concept"
+      },
+      {
+        "type": "action",
+        "description": "Submit the creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the create experience is available after the birth completes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a completed creation state is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "View organism growth analytics",
+    "description": "A user can open an organism’s telemetry tab and see analytics content for that organism.",
+    "category": "Organism Detail - Analytics/Telemetry Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "action",
+        "description": "Click the telemetry tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analytics charts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism statistics are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Move from organism analysis to family tree or telemetry inspection",
+    "description": "This verifies that a user can continue from an organism detail page into deeper analysis views such as the family tree or telemetry tab.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Open the Family Tree tab"
+      },
+      {
+        "type": "action",
+        "description": "Open the Telemetry tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify family tree information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify telemetry information is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Browse the landing page and reach the create flow",
+    "description": "This verifies that a visitor can explore the landing page and use the primary creation call to action to reach organism birth.",
+    "category": "Home / Landing Page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the landing page feature sections"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the how-it-operates section"
+      },
+      {
+        "type": "action",
+        "description": "Click the primary creation call to action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the create page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the birth form is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Complete breeding and open the offspring in bio-storage",
+    "description": "A user can breed organisms and then reach the newly created offspring from the resulting storage view.",
+    "category": "Breed Organisms",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /breed"
+      },
+      {
+        "type": "action",
+        "description": "Select the first organism"
+      },
+      {
+        "type": "action",
+        "description": "Select the second organism"
+      },
+      {
+        "type": "action",
+        "description": "Start the breeding process"
+      },
+      {
+        "type": "action",
+        "description": "Open the new offspring organism from the result view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the offspring organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new organism is present in bio-storage"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Inspect family tree and telemetry from an organism detail page",
+    "description": "This verifies that a user can move from the detail page into family and telemetry views for follow-up analysis.",
+    "category": "Organism List (Bio-Storage)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Click an organism card"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Family Tree tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Telemetry tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify family relationship information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify telemetry data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Browse the landing page and reach the mesh explorer",
+    "description": "This verifies that a visitor can use the landing page mesh call to action to reach the 3D explorer.",
+    "category": "Home / Landing Page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the landing page feature sections"
+      },
+      {
+        "type": "action",
+        "description": "Click the mesh exploration call to action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the mesh explorer page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the public mesh view is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Create an offspring by breeding two organisms",
+    "description": "This verifies that a user can choose two organisms to synthesize an offspring and then access the newly created organism in bio-storage.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /breed"
+      },
+      {
+        "type": "action",
+        "description": "Choose two organisms to breed"
+      },
+      {
+        "type": "action",
+        "description": "Submit the breeding action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a new offspring organism is created"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the offspring is available in bio-storage or a detail view"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Start breeding two organisms and confirm a new offspring exists",
+    "description": "This verifies that a user can choose two organisms to synthesize offspring and then see the new organism available in bio-storage.",
+    "category": "Create / Birth Organism",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /breed"
+      },
+      {
+        "type": "action",
+        "description": "Choose the first organism"
+      },
+      {
+        "type": "action",
+        "description": "Choose the second organism"
+      },
+      {
+        "type": "action",
+        "description": "Submit the breeding form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a new organism is created"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the offspring is available in bio-storage"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC028",
+    "title": "Breed two organisms and view the new offspring",
+    "description": "This verifies that a user can choose two organisms on the breeding page, synthesize offspring, and reach the new organism’s detail view.",
+    "category": "Breed Organisms",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /breed"
+      },
+      {
+        "type": "action",
+        "description": "Choose the first organism"
+      },
+      {
+        "type": "action",
+        "description": "Choose the second organism"
+      },
+      {
+        "type": "action",
+        "description": "Submit the breeding action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a new organism is created"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new organism detail page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Explore the public mesh and open an organism from a node selection",
+    "description": "This verifies that a user can enter the 3D mesh, select an organism node, and reach the organism detail view for deeper analysis.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /mesh"
+      },
+      {
+        "type": "action",
+        "description": "Select an organism node in the mesh"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected organism detail view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism information is displayed for the selected node"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Select an organism node in the mesh and open its detail view",
+    "description": "This verifies that a user can explore the mesh, select a node, and continue into the organism detail page.",
+    "category": "Home / Landing Page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /mesh"
+      },
+      {
+        "type": "action",
+        "description": "Select an organism node in the mesh"
+      },
+      {
+        "type": "action",
+        "description": "Open the selected organism from the mesh"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected organism content is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Select an organism node from the mesh and inspect it",
+    "description": "This verifies that a user can explore the public mesh, select a node, and open the selected organism in detail view.",
+    "category": "3D Mesh Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /mesh"
+      },
+      {
+        "type": "action",
+        "description": "Select an organism node in the mesh"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected organism is highlighted or focused"
+      },
+      {
+        "type": "action",
+        "description": "Open the selected organism"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism detail page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Select an organism from the mesh",
+    "description": "A user can select an organism node in the mesh and open its detail view for deeper inspection.",
+    "category": "3D Mesh Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /mesh"
+      },
+      {
+        "type": "action",
+        "description": "Select an organism node"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected organism detail view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism information is available for inspection"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC033",
+    "title": "Copy a DNA strand and see confirmation feedback",
+    "description": "This verifies that a user can copy a strand from the DNA core and receive visible feedback that the copy action succeeded.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organisms"
+      },
+      {
+        "type": "action",
+        "description": "Open an organism card from the list"
+      },
+      {
+        "type": "action",
+        "description": "Open the DNA Core tab"
+      },
+      {
+        "type": "action",
+        "description": "Copy a DNA strand"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify copied confirmation feedback is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the DNA strand remains displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "Explore the public organism mesh",
+    "description": "A visitor can open the 3D mesh explorer and view the public organism field.",
+    "category": "3D Mesh Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /mesh"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the 3D organism mesh is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify public organisms are visible in the mesh"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Reject an empty organism seed submission",
+    "description": "This verifies that the create flow blocks submission when the user provides no idea seed and shows validation feedback.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /create"
+      },
+      {
+        "type": "action",
+        "description": "Submit the organism creation form without entering a seed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a seed validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no organism detail page is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC036",
+    "title": "Handle a direct organism URL when state is not hydrated",
+    "description": "This verifies that opening an organism detail page directly without prior hydration shows the organism void state instead of a populated record.",
+    "category": "Organism Detail - DNA Core",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the organism void state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism details are not displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC037",
+    "title": "Handle a very short or invalid seed before creation",
+    "description": "This verifies that the create flow surfaces validation feedback when the user enters an invalid seed and does not create an organism.",
+    "category": "Organism Detail - DNA Core Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in an invalid short seed into the seed field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the organism creation form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a seed validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no organism was created"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC038",
+    "title": "Show a void state for an unknown organism page",
+    "description": "A user who opens an organism page without hydrated client state sees the empty organism void state instead of a broken detail view.",
+    "category": "Organism Detail - Analytics/Telemetry Tab",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /organism/nexus-1778519558047-g39zhxlml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an organism void state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify organism detail content is not displayed"
+      }
+    ],
+    "priority": "Low"
+  }
+]
