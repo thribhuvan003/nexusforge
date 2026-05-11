@@ -122,7 +122,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-[var(--bg-paper)] border-4 border-white/20 hover:border-white p-10 flex flex-col gap-6 transition-colors shadow-none hover:shadow-[12px_12px_0_rgba(255,255,255,1)] group"
+                className="bg-[var(--bg-paper)] border-4 border-white/20 hover:border-white p-16 flex flex-col gap-6 transition-colors shadow-none hover:shadow-[12px_12px_0_rgba(255,255,255,1)] group"
               >
                 <div className="flex items-center gap-6">
                   <div className="w-16 h-16 border-4 border-white flex items-center justify-center bg-black" style={{ color: feat.color }}>
@@ -162,7 +162,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-black border-4 border-white p-8 relative flex flex-col hover:-translate-y-2 transition-transform"
+                className="bg-black border-4 border-white p-10 relative flex flex-col hover:-translate-y-2 transition-transform"
               >
                 <div className="absolute -top-6 -left-6 w-16 h-16 bg-[var(--brand-lime)] border-4 border-black flex items-center justify-center font-sans font-black text-3xl text-black transform -rotate-6">
                   {step.step}
@@ -176,9 +176,9 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-24 text-center">
-            <Link href="/create" className="btn-brutal !py-6 !text-3xl inline-flex items-center gap-4 !bg-black !text-white hover:!bg-[var(--brand-lime)] hover:!text-black shadow-[12px_12px_0_rgba(255,255,255,1)] hover:shadow-[16px_16px_0_rgba(0,0,0,1)]">
-              INITIALIZE SEQUENCE <ArrowRight size={32} />
+          <div className="mt-32 mb-16 text-center">
+            <Link href="/create" className="btn-brutal !py-8 !text-4xl inline-flex items-center gap-4 !bg-black !text-white hover:!bg-[var(--brand-lime)] hover:!text-black shadow-[12px_12px_0_rgba(255,255,255,1)] hover:shadow-[16px_16px_0_rgba(0,0,0,1)]">
+              INITIALIZE SEQUENCE <ArrowRight size={40} />
             </Link>
           </div>
         </div>
