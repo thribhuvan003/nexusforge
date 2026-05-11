@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NexusForge
 
-## Getting Started
+NexusForge is a living workspace where your ideas don't just sit in a text file—they evolve. By turning raw thoughts into structured "DNA," maintaining a persistent vector memory, and utilizing a multi-agent swarm, NexusForge acts as a brutal, highly efficient engine for creative synthesis.
 
-First, run the development server:
+Built by **Thribhuvan**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Persistent Vector Memory**: Your ideas are saved permanently using Supabase `pgvector`. The system never forgets the context of your projects.
+- **Stateful Swarm Execution**: A 5-agent LangGraph-style swarm debates, critiques, and refines your seeds. It doesn't just chat; it executes real workflows.
+- **Semantic Breeding**: Fork public ideas from the 3D Mesh and fuse them with your own. The Synthesis engine intelligently merges concepts to force mutations.
+- **Dopamine Brutalist UI**: Stripped down, high-impact design that removes all fluff and focuses purely on utility and output.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: Next.js 16 (App Router), React, Tailwind CSS v4, Framer Motion
+- **3D Visualization**: React Three Fiber, Drei
+- **State Management**: Zustand
+- **Backend & Database**: Supabase (PostgreSQL, `pgvector`, Row Level Security)
+- **AI Integration**: Google Gemini API (`@google/genai`)
 
-## Learn More
+## Local Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/thribhuvan003/nexusforge.git
+   cd nexusforge
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Set up Environment Variables:**
+   Copy the `.env.example` file to `.env.local` or create a new `.env.local` file in the root directory:
+   ```env
+   GEMINI_API_KEY=your_gemini_key_here
+   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_key_here
+   
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   ```
 
-## Deploy on Vercel
+4. **Database Migration:**
+   Run the SQL script provided in `supabase/migrations/001_pgvector_schema.sql` (if you saved it locally) or copy the setup query into your Supabase SQL Editor to initialize the `organisms` table and `pgvector` memory structure.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project is fully optimized for deployment on Vercel. 
+1. Push your code to GitHub.
+2. Log into Vercel and import the repository.
+3. Add your environment variables in the Vercel dashboard.
+4. Deploy!
+
+## License
+
+MIT License.
