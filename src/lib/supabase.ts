@@ -6,7 +6,6 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUz
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Fallback Mock Data for when Supabase is unreachable/paused
 export const MOCK_ORGANISMS: NexusCore[] = [
   {
     id: 'org_1',
@@ -15,19 +14,24 @@ export const MOCK_ORGANISMS: NexusCore[] = [
     seed_type: 'text',
     seed_content: 'A virus that spreads through ideas instead of biology',
     dna: [
-      { id: 'd1', label: 'Memetic Transmission', content: 'Infects host via auditory processing', type: 'concept', generation: 1, created_at: new Date().toISOString() },
-      { id: 'd2', label: 'Synaptic Override', content: 'Re-routes dopamine pathways', type: 'mutation', generation: 1, created_at: new Date().toISOString() }
+      { id: 'd1', label: 'Memetic Transmission', content: 'Infects host via auditory processing', type: 'concept', generation: 1, created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
+      { id: 'd2', label: 'Synaptic Override', content: 'Re-routes dopamine pathways for concept retention', type: 'mutation', generation: 1, created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
+      { id: 'd3', label: 'Host Selection Algorithm', content: 'Targets high-curiosity individuals via semantic resonance patterns', type: 'concept', generation: 2, created_at: new Date(Date.now() - 86400000 * 1).toISOString() },
     ],
     agents: [],
-    generation: 1,
-    mutations: 2,
+    generation: 2,
+    mutations: 3,
     health: 95,
     status: 'mature',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 1).toISOString(),
     user_id: 'user_1',
     is_public: true,
-    family_tree: [],
+    family_tree: [
+      { id: 'ft-org1-0', nexus_id: 'org_1', parent_ids: [], generation: 1, label: 'Genesis', type: 'birth', summary: 'Born from text seed: "A virus that spreads through ideas instead of biology"', created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
+      { id: 'ft-org1-1', nexus_id: 'org_1', parent_ids: [], generation: 2, label: 'First Evolution', type: 'evolution', summary: 'Synaptic override pathway discovered — dopamine re-routing confirmed viable', created_at: new Date(Date.now() - 86400000 * 2).toISOString() },
+      { id: 'ft-org1-2', nexus_id: 'org_1', parent_ids: [], generation: 2, label: 'Dream Sequence Alpha', type: 'dream', summary: 'Dream vision: memetic payload delivered via music, not speech', created_at: new Date(Date.now() - 86400000 * 1).toISOString() },
+    ],
     avatar_color: '#D4FF00',
     avatar_glow: '#D4FF0080'
   },
@@ -38,18 +42,26 @@ export const MOCK_ORGANISMS: NexusCore[] = [
     seed_type: 'text',
     seed_content: 'An organism that consumes lost time',
     dna: [
-      { id: 'd3', label: 'Temporal Digestion', content: 'Metabolizes regrets into energy', type: 'concept', generation: 1, created_at: new Date().toISOString() }
+      { id: 'd4', label: 'Temporal Digestion', content: 'Metabolizes regrets into energy at 98.3% efficiency', type: 'concept', generation: 1, created_at: new Date(Date.now() - 86400000 * 7).toISOString() },
+      { id: 'd5', label: 'Paradox Buffer', content: 'Prevents timeline collapse during heavy consumption cycles', type: 'prototype', generation: 2, created_at: new Date(Date.now() - 86400000 * 4).toISOString() },
+      { id: 'd6', label: 'Entropy Harvester', content: 'Converts entropy into structured temporal fragments for reuse', type: 'mutation', generation: 3, created_at: new Date(Date.now() - 86400000 * 1).toISOString() },
     ],
     agents: [],
     generation: 3,
     mutations: 5,
     health: 80,
     status: 'evolving',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 1).toISOString(),
     user_id: 'user_2',
     is_public: true,
-    family_tree: [],
+    family_tree: [
+      { id: 'ft-org2-0', nexus_id: 'org_2', parent_ids: [], generation: 1, label: 'Genesis', type: 'birth', summary: 'Born from text seed: "An organism that consumes lost time"', created_at: new Date(Date.now() - 86400000 * 7).toISOString() },
+      { id: 'ft-org2-1', nexus_id: 'org_2', parent_ids: [], generation: 2, label: 'Temporal Mutation', type: 'mutation', summary: 'Paradox buffer gene emerged — prevents recursive loop on paradoxical time events', created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
+      { id: 'ft-org2-2', nexus_id: 'org_2', parent_ids: [], generation: 2, label: 'Evolutionary Leap', type: 'evolution', summary: 'Generation 2 reached — temporal digestion efficiency increased by 34%', created_at: new Date(Date.now() - 86400000 * 4).toISOString() },
+      { id: 'ft-org2-3', nexus_id: 'org_2', parent_ids: [], generation: 3, label: 'Deep Dream', type: 'dream', summary: 'Dream vision: entropy harvesting unlocked — lost time can now be reprocessed into structured energy', created_at: new Date(Date.now() - 86400000 * 2).toISOString() },
+      { id: 'ft-org2-4', nexus_id: 'org_2', parent_ids: [], generation: 3, label: 'Second Evolution', type: 'evolution', summary: 'Generation 3 achieved — organism now operates across 3 simultaneous temporal streams', created_at: new Date(Date.now() - 86400000 * 1).toISOString() },
+    ],
     avatar_color: '#4300FF',
     avatar_glow: '#4300FF80'
   },
@@ -60,18 +72,23 @@ export const MOCK_ORGANISMS: NexusCore[] = [
     seed_type: 'text',
     seed_content: 'Spins webs out of nothingness',
     dna: [
-      { id: 'd4', label: 'Null Silk', content: 'Invisible but unbreakable structural material', type: 'visual', generation: 2, created_at: new Date().toISOString() }
+      { id: 'd7', label: 'Null Silk', content: 'Invisible but unbreakable structural material spun from quantum uncertainty', type: 'visual', generation: 2, created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
+      { id: 'd8', label: 'Void Anchor', content: 'Pins web structures to stable dimensional coordinates in null-space', type: 'concept', generation: 2, created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
     ],
     agents: [],
     generation: 2,
     mutations: 1,
     health: 100,
     status: 'mature',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
     user_id: 'user_1',
     is_public: true,
-    family_tree: [],
+    family_tree: [
+      { id: 'ft-org3-0', nexus_id: 'org_3', parent_ids: [], generation: 1, label: 'Genesis', type: 'birth', summary: 'Born from text seed: "Spins webs out of nothingness"', created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
+      { id: 'ft-org3-1', nexus_id: 'org_3', parent_ids: [], generation: 2, label: 'First Mutation', type: 'mutation', summary: 'Null silk discovered — material properties defy conventional physics', created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
+      { id: 'ft-org3-2', nexus_id: 'org_3', parent_ids: [], generation: 2, label: 'Void Stabilization', type: 'evolution', summary: 'Void anchor gene evolved — webs now persist indefinitely without energy input', created_at: new Date(Date.now() - 86400000 * 2).toISOString() },
+    ],
     avatar_color: '#FF3300',
     avatar_glow: '#FF330080'
   }

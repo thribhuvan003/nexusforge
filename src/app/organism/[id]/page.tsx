@@ -164,6 +164,29 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
     }
   };
 
+  const handleAgentActivity = (label: string, summary: string) => {
+    if (!organism) return;
+    const now = new Date().toISOString();
+    const activityNode = {
+      id: `ft-agent-${Date.now()}`,
+      nexus_id: id,
+      parent_ids: [] as string[],
+      generation: organism.generation,
+      label,
+      type: 'evolution' as const,
+      summary,
+      created_at: now,
+    };
+    const updatedData = {
+      family_tree: [...organism.family_tree, activityNode],
+      updated_at: now,
+    };
+    updateOrganism(id, updatedData);
+    const newState = { ...organism, ...updatedData };
+    setOrganism(newState);
+    saveOrganism(newState).catch(console.error);
+  };
+
   const copyDna = (dna: DNAStrand) => {
     navigator.clipboard.writeText(`${dna.label}: ${dna.content}`);
     setCopied(dna.id);
@@ -315,7 +338,7 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
 
           {activeTab === 'agents' && (
             <motion.div key="agents" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="bento-card bg-transparent border-white/5 p-0 overflow-hidden">
-              <AgentChat organism={organism} />
+              <AgentChat organism={organism} onActivity={handleAgentActivity} />
             </motion.div>
           )}
 

@@ -7,29 +7,32 @@ import { useStore } from '@/store/useStore';
 import ClientLayout from '@/components/ClientLayout';
 import OrganismAvatar from '@/components/OrganismAvatar';
 import { Plus, Dna, ChevronRight } from 'lucide-react';
-import { fetchPublicOrganisms } from '@/lib/supabase';
-import { NexusCore } from '@/types';
+import { fetchPublicOrganisms, MOCK_ORGANISMS } from '@/lib/supabase';
 
 export default function OrganismsPage() {
   const { organisms, addOrganism } = useStore();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (organisms.length === 0 && !loading) {
+    // Immediately seed mock organisms if store is empty (sync fallback)
+    if (organisms.length === 0) {
+      MOCK_ORGANISMS.forEach(org => addOrganism(org));
+    }
+    // Then try to enrich with live Supabase data
+    if (!loading) {
       setLoading(true);
-      fetchPublicOrganisms(5).then(publicOrgs => {
+      fetchPublicOrganisms(10).then(publicOrgs => {
         if (publicOrgs && publicOrgs.length > 0) {
-          // Add them to the store to populate bio-storage
           publicOrgs.forEach(org => {
-            // Avoid duplicates
             if (!organisms.find(o => o.id === org.id)) {
-               addOrganism(org);
+              addOrganism(org);
             }
           });
         }
       }).catch(console.error).finally(() => setLoading(false));
     }
-  }, [organisms, loading, addOrganism]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ClientLayout>

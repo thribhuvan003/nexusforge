@@ -16,7 +16,12 @@ interface Message {
   timestamp: string;
 }
 
-export default function AgentChat({ organism }: { organism: NexusCore }) {
+interface AgentChatProps {
+  organism: NexusCore;
+  onActivity?: (label: string, summary: string) => void;
+}
+
+export default function AgentChat({ organism, onActivity }: AgentChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
@@ -82,6 +87,13 @@ export default function AgentChat({ organism }: { organism: NexusCore }) {
       });
 
       setMessages(prev => [...prev, ...agentMessages]);
+
+      // Wire responses into organism telemetry/family_tree
+      if (onActivity && agentMessages.length > 0) {
+        const label = `SWARM: ${text.slice(0, 40)}`;
+        const summary = agentMessages.map(m => `[${m.agentName}] ${m.content.slice(0, 80)}`).join(' | ');
+        onActivity(label, summary);
+      }
     } catch (err) {
       setMessages(prev => [...prev, {
         id: `err-${Date.now()}`,

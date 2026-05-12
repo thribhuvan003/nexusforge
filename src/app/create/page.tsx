@@ -87,7 +87,7 @@ export default function CreatePage() {
         created_at: now,
         updated_at: now,
         user_id: 'local',
-        is_public: false,
+        is_public: true,
         family_tree: [{
           id: `ft-${id}-0`,
           nexus_id: id,

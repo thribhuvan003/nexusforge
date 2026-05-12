@@ -2,16 +2,16 @@
   "status": "commited",
   "type": "frontend",
   "scope": "codebase",
-  "localEndpoint": "http://localhost:3000/organism/nexus-1778519558047-g39zhxlml",
+  "localEndpoint": "http://localhost:3002/organism/nexus-1778519558047-g39zhxlml",
   "executionArgs": {
     "projectName": "nexusforge",
     "projectPath": "C:\\Users\\ntena\\.gemini\\antigravity\\scratch\\nexusforge",
     "testIds": [],
-    "additionalInstruction": "Test against the deployed Vercel URL: https://nexusforge-seven.vercel.app. Focus on the organism detail page at /organism/nexus-1778519558047-g39zhxlml. Test all tabs (DNA Core, Swarm Agents, Family Tree, Telemetry), action buttons (Force Evolution, Trigger Dream, Export Data), navigation, and API endpoints (/api/evolve, /api/dream, /api/agents/chat, /api/birth, /api/breed). Check that the page loads correctly, tabs switch properly, and AI-powered features work end-to-end.",
+    "additionalInstruction": "Test against the local server at http://localhost:3001. Ensure you test all 30 test cases to verify the recent bug fixes for persistence, 404 routing, and UI blockers.",
     "serverMode": "production",
     "envs": {
       "API_KEY": "sk-user-e5MGSdcDmn3QZzokBdGpK0ul5t1NUacc3vVh1nia2NbQLOYXk0mJXizpJ1WA_AKpc27JMY_DeyHHZnz6hf4tcGvd0r3aQ6L4ripwT342oCKROCxROj4yuq20f70qgsHfz4Y"
     }
   },
-  "serverPort": 60313
+  "serverPort": 60719
 }
