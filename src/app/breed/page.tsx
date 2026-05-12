@@ -37,7 +37,7 @@ export default function BreedIndex() {
 
   return (
     <ClientLayout>
-      <div className="min-h-screen bg-[var(--bg-abyss)] pt-[100px] pb-20 relative overflow-hidden px-6">
+      <div className="min-h-screen bg-[var(--bg-abyss)] pt-[120px] pb-20 relative overflow-hidden px-6">
         <div className="max-w-[1200px] mx-auto z-10 relative">
           <div className="flex items-center gap-4 mb-12">
             <button onClick={() => router.back()} className="text-[var(--text-tertiary)] hover:text-white transition-colors p-2 bg-white/5 rounded-full border-2 border-white/10 hover:border-white">

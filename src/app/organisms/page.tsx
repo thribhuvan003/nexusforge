@@ -36,7 +36,7 @@ export default function OrganismsPage() {
 
   return (
     <ClientLayout>
-      <div className="min-h-screen pt-[120px] pb-20 px-6 max-w-[1400px] mx-auto bg-black bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')] bg-blend-overlay">
+      <div className="min-h-screen pt-[120px] pb-20 px-6 max-w-[1400px] mx-auto bg-black">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
           
           <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-16 border-b-8 border-white/20 pb-12">

@@ -44,7 +44,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-black min-h-screen pt-24 font-sans selection:bg-[var(--brand-lime)] selection:text-black">
+    <div className="bg-black min-h-screen pt-[120px] font-sans selection:bg-[var(--brand-lime)] selection:text-black">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-white/10 px-6">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none mix-blend-screen"></div>
