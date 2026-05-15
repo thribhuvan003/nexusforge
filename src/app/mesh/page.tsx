@@ -125,6 +125,9 @@ export default function MeshPage() {
             />
           </div>
 
+          <p className="text-tech text-[var(--text-tertiary)] text-xs uppercase font-bold mb-2 md:hidden">
+            ↕ SCROLL LIST · TAP TO SELECT NODE
+          </p>
           <div className="flex-1 flex flex-col md:flex-row gap-4 min-h-[500px]">
             {/* DOM-based List Sidebar */}
             <div className="w-full md:w-1/3 bg-black border-4 border-white/20 flex flex-col overflow-hidden">
@@ -159,7 +162,12 @@ export default function MeshPage() {
                 <Canvas camera={{ position: [0, 0, 50], fov: 60 }}>
                   <ambientLight intensity={0.5} />
                   <pointLight position={[10, 10, 10]} intensity={1} />
-                  <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
+                  <OrbitControls
+                    enableZoom={true}
+                    enablePan={true}
+                    enableRotate={true}
+                    touches={{ ONE: 0, TWO: 1 }}
+                  />
                   
                   {filtered.map((org) => (
                     <MeshNode key={org.id} org={org} onSelect={setSelectedOrg} />
