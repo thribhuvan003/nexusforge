@@ -26,7 +26,6 @@
 
   /* === Typography === */
   --font-sans: 'Bricolage Grotesque', sans-serif;
-  --font-serif: 'Instrument Serif', serif;
   --font-mono: 'Space Mono', monospace;
 
   /* === Shapes & Borders === */
@@ -84,14 +83,6 @@ body {
   text-transform: uppercase;
 }
 
-.display-serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(3rem, 13vw, 13rem);
-  line-height: 0.8;
-  letter-spacing: -0.02em;
-  color: var(--brand-lime);
-}
 
 .heading-bold {
   font-family: var(--font-sans);
