@@ -1,36 +1,66 @@
 # NexusForge 🧬
 
-> *"what if your ideas could evolve, breed, and live forever"*
-> — me at 2am, clearly not thinking straight
+> a garden for your ideas. plant a seed, watch it grow.
+
+**[Live →](https://nexusforge-git-main-thribhuvans-projects-d5694d22.vercel.app)**
 
 ---
 
-## the idea
+## what it is
 
-you type an idea. a swarm of AI agents tears it apart, gives it DNA strands, lets it mutate and evolve over time. organisms can breed with each other to create new hybrid ideas. there's a 3D mesh where all your ideas float in space looking very dramatic and important.
+drop a raw idea. five agents tear it apart and give it DNA. it lives, mutates, breeds with your other ideas, and stays alive forever.
 
-it's basically a tamagotchi for your startup ideas. except instead of feeding it, you watch AI agents argue about your million dollar concept.
-
----
-
-## what it's supposed to do
-
-- **birth** — drop a seed idea, watch 5 AI agents dissect it and give it "DNA"
-- **evolve** — organisms mutate over time, gaining new traits
-- **breed** — two ideas make a baby idea (yes really)
-- **mesh** — 3D space where all your ideas float around looking cool
-- **dream** — organisms hallucinate new directions while you sleep (allegedly)
+basically a tamagotchi for the half-formed thoughts you usually lose in your notes app.
 
 ---
 
-## current status
+## what you can do
 
-left it halfway lmao 😭
-
-the bones are good. the vibe is immaculate. the DNA system works, the agents chat, the 3D mesh exists and it spins. but like... some things were promised that aren't quite there yet. you know how it is.
-
-built by **thribhuvan003** — [github.com/thribhuvan003](https://github.com/thribhuvan003)
+- **🌱 plant a seed** — type any idea. the swarm decodes it into structured DNA in seconds
+- **🧠 watch the swarm react** — five agents (Nova, Atlas, Cipher, Forge, Echo) weigh in with their own takes
+- **⚡ evolve & dream** — push any idea further whenever you want. new mutations on demand
+- **🧬 breed two ideas** — pick any two organisms, watch them debate which traits survive, get a hybrid
+- **📤 export anywhere** — markdown, README, pitch outline, raw JSON
 
 ---
 
-*dopamine brutalism. neon lime. chunky borders. no regrets.*
+## tech
+
+- **Next.js 16** + **React 19**
+- **TypeScript**
+- **Tailwind v4** + **Framer Motion**
+- **Three.js** for the 3D mesh
+- **Supabase** for permanent storage
+- **Zustand** for client state
+
+---
+
+## getting started
+
+```bash
+git clone https://github.com/thribhuvan003/nexusforge.git
+cd nexusforge
+npm install
+```
+
+create a `.env.local`:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+GEMINI_API_KEY=
+```
+
+```bash
+npm run dev
+```
+
+open `http://localhost:3000`. plant something.
+
+---
+
+## the vibe
+
+dopamine brutalism. neon lime. chunky borders. elastic springs. no subtle gradients, no enterprise corporate energy. it should feel like clicking a button does something.
+
+built by **[thribhuvan003](https://github.com/thribhuvan003)**.

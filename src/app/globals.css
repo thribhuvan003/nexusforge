@@ -229,3 +229,167 @@ body {
   z-index: -2;
   transform: translate(2px, -2px);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   KINETIC INTERACTIONS — magnetic, tilt, holographic
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tilt card — 3D perspective wrapper. Pair with framer-motion rotateX/rotateY. */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.tilt-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s var(--ease-fluid);
+}
+
+/* Holographic shimmer — moving prism-light layer for cards/avatars */
+.holo {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.holo::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(212, 255, 0, 0.25) 60deg,
+    rgba(67, 0, 255, 0.25) 120deg,
+    rgba(255, 51, 0, 0.25) 180deg,
+    transparent 240deg,
+    transparent 360deg
+  );
+  animation: holo-spin 6s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.holo:hover::before { opacity: 1; }
+
+@keyframes holo-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Aurora — slow gradient that drifts across hero backgrounds */
+.aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 30% 30%, rgba(var(--brand-lime-rgb), 0.18), transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(var(--brand-violet-rgb), 0.22), transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(var(--brand-orange-rgb), 0.12), transparent 50%);
+  filter: blur(60px);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+.aurora::after {
+  animation-duration: 32s;
+  animation-direction: alternate-reverse;
+  opacity: 0.6;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(4%, -3%) rotate(8deg); }
+  100% { transform: translate(-3%, 4%) rotate(-6deg); }
+}
+
+/* DNA strand — animated svg line for hero/empty states */
+@keyframes dna-flow {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -240; }
+}
+
+.dna-strand path {
+  fill: none;
+  stroke: var(--brand-lime);
+  stroke-width: 2;
+  stroke-dasharray: 12 6;
+  animation: dna-flow 4s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(var(--brand-lime-rgb), 0.6));
+}
+
+.dna-strand path:nth-child(2) {
+  stroke: var(--brand-violet);
+  animation-direction: reverse;
+  filter: drop-shadow(0 0 6px rgba(var(--brand-violet-rgb), 0.6));
+}
+
+/* Magnetic glow — subtle glow on hover for interactive surfaces */
+.glow-on-hover {
+  transition: box-shadow 0.4s var(--ease-fluid), transform 0.3s var(--ease-elastic);
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 0 2px var(--brand-lime), 0 0 40px rgba(var(--brand-lime-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+/* Sticker — rotated chip used for badges/pills */
+.sticker {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  padding: 0.5rem 1rem;
+  border: 3px solid #000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  transform: rotate(-2deg);
+  box-shadow: 4px 4px 0 var(--brand-lime);
+}
+
+.sticker.violet { box-shadow: 4px 4px 0 var(--brand-violet); }
+.sticker.orange { box-shadow: 4px 4px 0 var(--brand-orange); }
+
+/* Scroll-driven blinking caret */
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  background: var(--brand-lime);
+  vertical-align: middle;
+  margin-left: 0.1em;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+/* Number ticker — used for stats */
+.ticker {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Scrollbar (slim, on-brand) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-abyss); }
+::-webkit-scrollbar-thumb {
+  background: var(--brand-violet);
+  border: 2px solid var(--bg-abyss);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--brand-lime); }
