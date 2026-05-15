@@ -65,6 +65,7 @@ export default function AgentChat({ organism, onActivity }: AgentChatProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
+          nexusId: organism.id,
           organismContext: `${organism.name}: ${organism.tagline}. DNA: ${organism.dna?.map(d => d.label).join(', ')}`,
           history: messages.slice(-6).map(m => ({ role: m.role, content: m.content })),
         }),
@@ -110,7 +111,7 @@ export default function AgentChat({ organism, onActivity }: AgentChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-350px)] min-h-[500px] border-4 border-white bg-black relative">
+    <div className="flex flex-col min-h-[500px] max-h-[700px] border-4 border-white bg-black relative">
       {/* Agent roster */}
       <div className="flex overflow-x-auto border-b-4 border-white shrink-0 hide-scrollbar bg-[var(--bg-paper)]">
         {AGENT_PROFILES.map(agent => (
@@ -192,7 +193,7 @@ export default function AgentChat({ organism, onActivity }: AgentChatProps) {
             className="flex-1 bg-black border-4 border-white p-4 font-sans font-bold text-xl text-[var(--brand-lime)] placeholder-white/20 outline-none focus:border-[var(--brand-lime)] uppercase transition-colors"
             disabled={isThinking}
           />
-          <button type="submit" disabled={!input.trim() || isThinking} className={`w-16 flex items-center justify-center border-4 border-white ${!input.trim() || isThinking ? 'bg-black text-white/20 cursor-not-allowed' : 'bg-[var(--brand-lime)] text-black hover:shadow-[4px_4px_0_rgba(255,255,255,1)] hover:-translate-y-1 transition-all'}`}>
+          <button type="submit" disabled={!input.trim() || isThinking} aria-label="Send message to swarm" className={`w-16 flex items-center justify-center border-4 border-white ${!input.trim() || isThinking ? 'bg-black text-white/20 cursor-not-allowed' : 'bg-[var(--brand-lime)] text-black hover:shadow-[4px_4px_0_rgba(255,255,255,1)] hover:-translate-y-1 transition-all'}`}>
             <Send size={24} />
           </button>
         </form>

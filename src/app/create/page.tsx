@@ -25,6 +25,14 @@ const EXAMPLE_SEEDS = [
   'Peer-to-peer tutoring marketplace for niche skills',
 ];
 
+interface SwarmThoughts {
+  innovator: string;
+  architect: string;
+  critic: string;
+  builder: string;
+  futurist: string;
+}
+
 export default function CreatePage() {
   const router = useRouter();
   const { addOrganism } = useStore();
@@ -33,6 +41,7 @@ export default function CreatePage() {
   const [isBirthing, setIsBirthing] = useState(false);
   const [birthPhase, setBirthPhase] = useState('');
   const [error, setError] = useState('');
+  const [swarmThoughts, setSwarmThoughts] = useState<{ thoughts: SwarmThoughts; pendingRoute: string } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleBirth = async () => {
@@ -99,13 +108,19 @@ export default function CreatePage() {
           created_at: now,
         }],
         avatar_color: data.avatar_color || '#D4FF00',
-        avatar_glow: data.avatar_color || '#D4FF00',
+        avatar_glow: `${data.avatar_color || '#D4FF00'}80`,
       };
 
       addOrganism(organism);
       await saveOrganism(organism);
       clearInterval(phaseInterval);
-      router.push(`/organism/${id}`);
+      setIsBirthing(false);
+
+      if (data.initial_thoughts && typeof data.initial_thoughts === 'object') {
+        setSwarmThoughts({ thoughts: data.initial_thoughts as SwarmThoughts, pendingRoute: `/organism/${id}` });
+      } else {
+        router.push(`/organism/${id}`);
+      }
     } catch (err) {
       clearInterval(phaseInterval);
       setError(err instanceof Error ? err.message : 'Birth failed. Check your API key.');
@@ -113,10 +128,82 @@ export default function CreatePage() {
     }
   };
 
+  const proceedToOrganism = () => {
+    if (swarmThoughts) router.push(swarmThoughts.pendingRoute);
+  };
+
   return (
     <ClientLayout>
+      {/* Swarm Reacts overlay */}
+      <AnimatePresence>
+        {swarmThoughts && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Swarm initial reactions"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-w-2xl"
+            >
+              <div className="bg-[var(--brand-lime)] border-4 border-black px-6 py-3 mb-6 w-fit">
+                <p className="font-sans font-black text-black uppercase tracking-widest text-sm flex items-center gap-2">
+                  <Sparkles size={16} /> SWARM FIRST REACTIONS
+                </p>
+              </div>
+              <h2 className="font-sans font-black text-4xl text-white uppercase tracking-tighter mb-8 leading-tight">
+                THE AGENTS HAVE<br />
+                <span className="text-[var(--brand-lime)]">STUDIED YOUR SEED.</span>
+              </h2>
+
+              <div className="grid gap-4 mb-8">
+                {AGENT_PROFILES.map(agent => {
+                  const thought = swarmThoughts.thoughts[agent.role as keyof SwarmThoughts];
+                  if (!thought) return null;
+                  return (
+                    <motion.div
+                      key={agent.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: AGENT_PROFILES.indexOf(agent) * 0.1 }}
+                      className="flex gap-4 bg-[var(--bg-paper)] border-4 border-white/20 p-4"
+                    >
+                      <div
+                        className="w-12 h-12 border-4 border-white shrink-0 flex items-center justify-center text-xl font-black"
+                        style={{ color: agent.color }}
+                      >
+                        {agent.avatar}
+                      </div>
+                      <div>
+                        <span className="font-sans font-black text-sm uppercase tracking-widest block mb-1" style={{ color: agent.color }}>
+                          {agent.name} — {agent.role}
+                        </span>
+                        <p className="font-sans font-bold text-[var(--text-secondary)] text-base leading-snug">{thought}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={proceedToOrganism}
+                className="btn-brutal w-full !text-2xl !py-6 flex items-center justify-center gap-3"
+              >
+                ENTER ORGANISM <ArrowRight size={28} />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="min-h-screen flex items-center justify-center pt-[120px] pb-20 px-6 relative overflow-hidden bg-[var(--bg-abyss)]">
-        
+
         {/* Background Decorative Blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-[var(--brand-violet)] rounded-full mix-blend-screen blur-[180px] opacity-20 pointer-events-none" />
 
@@ -144,7 +231,7 @@ export default function CreatePage() {
 
           <div className="bg-[var(--bg-paper)] border-4 border-white/20 p-8 shadow-[12px_12px_0_rgba(0,0,0,1)] relative">
             <div className="absolute top-0 right-0 w-16 h-16 bg-[var(--brand-violet)] border-b-4 border-l-4 border-black hidden md:block"></div>
-            
+
             {/* Seed Type Selector */}
             <div className="flex flex-wrap gap-4 mb-8">
               {SEED_TYPES.map(st => {
@@ -154,9 +241,10 @@ export default function CreatePage() {
                   <button key={st.type}
                     onClick={() => !isDisabled && setSeedType(st.type)}
                     disabled={isDisabled}
+                    title={isDisabled ? `${st.label} — Coming in v2` : undefined}
                     className={`flex items-center gap-2 px-6 py-4 font-sans font-black text-lg tracking-wider uppercase transition-transform border-4 ${
-                      isActive 
-                        ? 'bg-[var(--brand-lime)] text-black border-black shadow-[4px_4px_0_rgba(255,255,255,1)] transform -translate-y-1' 
+                      isActive
+                        ? 'bg-[var(--brand-lime)] text-black border-black shadow-[4px_4px_0_rgba(255,255,255,1)] transform -translate-y-1'
                         : 'bg-black text-[var(--text-secondary)] border-white/20 hover:border-white hover:text-white'
                     } ${isDisabled ? 'opacity-30 cursor-not-allowed' : 'cursor-crosshair'}`}
                   >
@@ -205,7 +293,7 @@ export default function CreatePage() {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                   className="mb-8 bg-[#FF3300] border-4 border-white p-4 flex items-center gap-4 text-white font-sans font-black uppercase shadow-[8px_8px_0_rgba(0,0,0,1)]"
                 >
-                  <AlertCircle size={28} className="shrink-0" /> 
+                  <AlertCircle size={28} className="shrink-0" />
                   <span className="text-xl tracking-wide">{error}</span>
                 </motion.div>
               )}

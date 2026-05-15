@@ -86,7 +86,7 @@ export default function SynthesizePage() {
           created_at: now,
         }],
         avatar_color: data.avatar_color || '#D4FF00',
-        avatar_glow: data.avatar_color || '#D4FF00',
+        avatar_glow: `${data.avatar_color || '#D4FF00'}80`,
       };
 
       addOrganism(organism);

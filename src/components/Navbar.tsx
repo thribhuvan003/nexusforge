@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: '/create', label: 'Create' },
   { href: '/organisms', label: 'Organisms' },
   { href: '/mesh', label: 'Mesh' },
+  { href: '/synthesize', label: 'Synthesize' },
 ];
 
 export default function Navbar() {
@@ -85,6 +86,8 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileOpen}
             className="md:hidden w-14 h-14 bg-black border-4 border-[var(--brand-lime)] flex items-center justify-center text-[var(--brand-lime)] shadow-[4px_4px_0_rgba(212,255,0,1)]"
           >
             {mobileOpen ? <X size={32} /> : <Menu size={32} />}
