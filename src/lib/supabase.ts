@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import type { NexusCore, MeshOrganism } from '@/types';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://eyfvsukoeqxqrgvdjiar.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5ZnZzdWtvZXF4cXJndmRqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1MDg3MzcsImV4cCI6MjA3MzA4NDczN30.kN9b6G0GBlZKBkx8xkYLhY1M4_0LJf2UszNtBwkRLjE';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hgstqajqaiqnjssxesmj.supabase.co';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhnc3RxYWpxYWlxbmpzc3hlc21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDg5NDYsImV4cCI6MjA5NDA4NDk0Nn0.y2TOsWlg2Pmpek2GNwOTnGCCKKTxs0mLeSftpzDQfDk';
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -94,6 +94,15 @@ export const MOCK_ORGANISMS: NexusCore[] = [
   }
 ];
 
+function seededFloat(str: string, seed: number): number {
+  let h = seed;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 0x9e3779b9);
+    h ^= h >>> 16;
+  }
+  return ((h >>> 0) / 0xffffffff) * 200 - 100;
+}
+
 export async function fetchPublicMesh(): Promise<MeshOrganism[]> {
   try {
     const { data, error } = await supabase
@@ -114,9 +123,9 @@ export async function fetchPublicMesh(): Promise<MeshOrganism[]> {
       health: org.health,
       generation: org.generation,
       mutations: org.mutations,
-      x: Math.random() * 100 - 50, // Assign random 3D coordinates if missing
-      y: Math.random() * 100 - 50,
-      z: Math.random() * 100 - 50,
+      x: seededFloat(org.id, 1),
+      y: seededFloat(org.id, 2),
+      z: seededFloat(org.id, 3),
     }));
   } catch (e) {
     console.warn("Supabase fetch failed, falling back to mock mesh:", e);
@@ -130,9 +139,9 @@ export async function fetchPublicMesh(): Promise<MeshOrganism[]> {
       health: org.health,
       generation: org.generation,
       mutations: org.mutations,
-      x: Math.random() * 20 - 10,
-      y: Math.random() * 20 - 10,
-      z: Math.random() * 20 - 10,
+      x: seededFloat(org.id, 1) / 5,
+      y: seededFloat(org.id, 2) / 5,
+      z: seededFloat(org.id, 3) / 5,
     }));
   }
 }
