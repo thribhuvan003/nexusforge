@@ -52,7 +52,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
         { id: 'd2', label: 'AI Transcription', content: 'Real-time voice to text with smart formatting', type: 'prototype', generation: 1, created_at: '' },
       ], agents: AGENT_PROFILES, generation: 4, mutations: 7, health: 92, status: 'mature',
       created_at: '', updated_at: '', user_id: 'demo', is_public: true, family_tree: [],
-      avatar_color: '#D4FF00', avatar_glow: '#D4FF00',
+      avatar_color: '#D4FF00', avatar_glow: '#D4FF0080',
     },
     {
       id: 'demo-2', name: 'NeuralNest', tagline: 'AI-powered knowledge management system',
@@ -61,7 +61,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
         { id: 'd4', label: 'Smart Search', content: 'Semantic search across all personal knowledge', type: 'prototype', generation: 1, created_at: '' },
       ], agents: AGENT_PROFILES, generation: 3, mutations: 5, health: 78, status: 'mature',
       created_at: '', updated_at: '', user_id: 'demo', is_public: true, family_tree: [],
-      avatar_color: '#4300FF', avatar_glow: '#4300FF',
+      avatar_color: '#4300FF', avatar_glow: '#4300FF80',
     },
     {
       id: 'demo-3', name: 'SynthWeave', tagline: 'Collaborative music creation through movement',
@@ -70,7 +70,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
         { id: 'd6', label: 'Group Sync', content: 'Multiple dancers create harmonies together', type: 'prototype', generation: 1, created_at: '' },
       ], agents: AGENT_PROFILES, generation: 6, mutations: 12, health: 95, status: 'mature',
       created_at: '', updated_at: '', user_id: 'demo', is_public: true, family_tree: [],
-      avatar_color: '#FF3300', avatar_glow: '#FF3300',
+      avatar_color: '#FF3300', avatar_glow: '#FF330080',
     },
   ];
 
@@ -134,7 +134,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
           status: 'growing', created_at: now, updated_at: now, user_id: 'local',
           is_public: false, family_tree: [birthNode],
           avatar_color: data.child.avatar_color || '#D4FF00',
-          avatar_glow: data.child.avatar_color || '#D4FF00',
+          avatar_glow: `${data.child.avatar_color || '#D4FF00'}80`,
         };
         setChildOrganism(child);
         addOrganism(child);

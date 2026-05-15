@@ -10,7 +10,7 @@ import { useStore } from '@/store/useStore';
 import ClientLayout from '@/components/ClientLayout';
 import OrganismAvatar from '@/components/OrganismAvatar';
 import { Globe, Search, Sparkles, GitFork, Activity } from 'lucide-react';
-import type { NexusCore, MeshOrganism } from '@/types';
+import { AGENT_PROFILES, type NexusCore, type MeshOrganism } from '@/types';
 import { fetchPublicMesh } from '@/lib/supabase';
 
 function MeshNode({ org, onSelect }: { org: MeshOrganism, onSelect: (org: MeshOrganism) => void }) {
@@ -70,8 +70,15 @@ export default function MeshPage() {
       tagline: org.tagline || '',
       seed_type: 'text',
       seed_content: `Forked from: ${org.name} — ${org.tagline}`,
-      dna: [], // To perfectly duplicate we'd need the full DNA, but this is a mesh preview
-      agents: [],
+      dna: [{
+        id: `dna-${id}-0`,
+        label: 'Origin Signal',
+        content: `Forked from ${org.name}: ${org.tagline}. Mesh preview — evolve to generate full DNA.`,
+        type: 'concept',
+        generation: (org.generation || 1) + 1,
+        created_at: now,
+      }],
+      agents: AGENT_PROFILES,
       generation: (org.generation || 1) + 1,
       mutations: 0,
       health: 100,
@@ -85,7 +92,7 @@ export default function MeshPage() {
         label: 'Forked', type: 'birth', summary: `Forked from ${org.name}`, created_at: now,
       }],
       avatar_color: org.avatar_color || '#D4FF00',
-      avatar_glow: org.avatar_glow || '#D4FF00',
+      avatar_glow: org.avatar_glow || '#D4FF0080',
     };
     addOrganism(forkedOrg);
     setForked(prev => new Set(prev).add(org.id));
