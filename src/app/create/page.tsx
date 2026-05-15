@@ -1,21 +1,22 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import ClientLayout from '@/components/ClientLayout';
 import { AGENT_PROFILES, type NexusCore, type DNAStrand } from '@/types';
-import { Sparkles, ArrowRight, Loader2, Mic, Image as ImageIcon, Video, Type, AlertCircle } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, Mic, Image as ImageIcon, Video, Type, AlertCircle, Settings } from 'lucide-react';
 import { saveOrganism } from '@/lib/supabase';
+import Link from 'next/link';
 
 type SeedType = 'text' | 'voice' | 'image' | 'video';
 
-const SEED_TYPES: { type: SeedType; icon: any; label: string; desc: string }[] = [
-  { type: 'text', icon: Type, label: 'Text', desc: 'Describe your idea' },
-  { type: 'voice', icon: Mic, label: 'Voice', desc: 'Coming soon' },
-  { type: 'image', icon: ImageIcon, label: 'Image', desc: 'Coming soon' },
-  { type: 'video', icon: Video, label: 'Video', desc: 'Coming soon' },
+const SEED_TYPES: { type: SeedType; icon: any; label: string }[] = [
+  { type: 'text', icon: Type, label: 'Text' },
+  { type: 'voice', icon: Mic, label: 'Voice' },
+  { type: 'image', icon: ImageIcon, label: 'Image' },
+  { type: 'video', icon: Video, label: 'Video' },
 ];
 
 const EXAMPLE_SEEDS = [
@@ -41,8 +42,16 @@ export default function CreatePage() {
   const [isBirthing, setIsBirthing] = useState(false);
   const [birthPhase, setBirthPhase] = useState('');
   const [error, setError] = useState('');
+  const [geminiMissing, setGeminiMissing] = useState(false);
   const [swarmThoughts, setSwarmThoughts] = useState<{ thoughts: SwarmThoughts; pendingRoute: string } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    fetch('/api/health')
+      .then(r => r.json())
+      .then(d => { if (!d.gemini) setGeminiMissing(true); })
+      .catch(() => {});
+  }, []);
 
   const handleBirth = async () => {
     if (!seedText.trim() || isBirthing) return;
@@ -163,7 +172,7 @@ export default function CreatePage() {
               </h2>
 
               <div className="grid gap-4 mb-8">
-                {AGENT_PROFILES.map(agent => {
+                {AGENT_PROFILES.map((agent, idx) => {
                   const thought = swarmThoughts.thoughts[agent.role as keyof SwarmThoughts];
                   if (!thought) return null;
                   return (
@@ -171,7 +180,7 @@ export default function CreatePage() {
                       key={agent.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: AGENT_PROFILES.indexOf(agent) * 0.1 }}
+                      transition={{ delay: idx * 0.1 }}
                       className="flex gap-4 bg-[var(--bg-paper)] border-4 border-white/20 p-4"
                     >
                       <div
@@ -203,8 +212,6 @@ export default function CreatePage() {
       </AnimatePresence>
 
       <div className="min-h-screen flex items-center justify-center pt-[120px] pb-20 px-6 relative overflow-hidden bg-[var(--bg-abyss)]">
-
-        {/* Background Decorative Blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-[var(--brand-violet)] rounded-full mix-blend-screen blur-[180px] opacity-20 pointer-events-none" />
 
         <motion.div
@@ -213,6 +220,34 @@ export default function CreatePage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full max-w-2xl relative z-10"
         >
+          {/* Setup Required Banner */}
+          <AnimatePresence>
+            {geminiMissing && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mb-8 bg-[var(--brand-orange)] border-4 border-black p-5 flex items-start gap-4 shadow-[8px_8px_0_rgba(0,0,0,1)]"
+              >
+                <Settings size={28} className="text-black shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-sans font-black text-black uppercase text-lg tracking-tight">GEMINI API KEY MISSING</p>
+                  <p className="font-sans font-bold text-black/80 text-sm mt-1">
+                    Without a key, organisms birth as CYBER-MOCK placeholders. Add <code className="bg-black/20 px-1 font-mono">GEMINI_API_KEY</code> to your <code className="bg-black/20 px-1 font-mono">.env.local</code> file.
+                  </p>
+                  <a
+                    href="https://aistudio.google.com/app/apikey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 font-sans font-black text-black underline underline-offset-2 text-sm uppercase tracking-wider hover:text-white transition-colors"
+                  >
+                    GET FREE KEY AT GOOGLE AI STUDIO →
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Header */}
           <div className="mb-12 border-b-8 border-white/10 pb-8">
             <div className="bg-[var(--brand-lime)] w-fit px-4 py-2 border-4 border-black mb-6 transform -rotate-2">
@@ -221,7 +256,7 @@ export default function CreatePage() {
               </p>
             </div>
             <h1 className="display-massive text-white uppercase tracking-tighter leading-[0.8]">
-              DROP YOUR <br/>
+              DROP YOUR <br />
               <span className="text-black bg-[var(--brand-lime)] px-4 mt-2 inline-block border-8 border-black shadow-[8px_8px_0_rgba(255,255,255,0.2)] transform rotate-1">SEED.</span>
             </h1>
             <p className="text-2xl text-[var(--text-secondary)] font-sans font-bold mt-10 max-w-xl leading-tight border-l-8 border-[var(--brand-violet)] pl-6">
@@ -230,7 +265,7 @@ export default function CreatePage() {
           </div>
 
           <div className="bg-[var(--bg-paper)] border-4 border-white/20 p-8 shadow-[12px_12px_0_rgba(0,0,0,1)] relative">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-[var(--brand-violet)] border-b-4 border-l-4 border-black hidden md:block"></div>
+            <div className="absolute top-0 right-0 w-16 h-16 bg-[var(--brand-violet)] border-b-4 border-l-4 border-black hidden md:block" />
 
             {/* Seed Type Selector */}
             <div className="flex flex-wrap gap-4 mb-8">
@@ -238,10 +273,11 @@ export default function CreatePage() {
                 const isActive = seedType === st.type;
                 const isDisabled = st.type !== 'text';
                 return (
-                  <button key={st.type}
+                  <button
+                    key={st.type}
                     onClick={() => !isDisabled && setSeedType(st.type)}
                     disabled={isDisabled}
-                    title={isDisabled ? `${st.label} — Coming in v2` : undefined}
+                    title={isDisabled ? `${st.label} — Coming soon` : undefined}
                     className={`flex items-center gap-2 px-6 py-4 font-sans font-black text-lg tracking-wider uppercase transition-transform border-4 ${
                       isActive
                         ? 'bg-[var(--brand-lime)] text-black border-black shadow-[4px_4px_0_rgba(255,255,255,1)] transform -translate-y-1'
@@ -249,6 +285,7 @@ export default function CreatePage() {
                     } ${isDisabled ? 'opacity-30 cursor-not-allowed' : 'cursor-crosshair'}`}
                   >
                     <st.icon size={20} /> {st.label}
+                    {isDisabled && <span className="text-[10px] font-mono ml-1 opacity-60">SOON</span>}
                   </button>
                 );
               })}
@@ -264,21 +301,24 @@ export default function CreatePage() {
                 placeholder="DESCRIBE YOUR IDEA IN RAW DETAIL..."
                 disabled={isBirthing}
                 rows={6}
+                maxLength={2000}
+                aria-label="Seed idea text"
                 className={`w-full bg-black border-4 font-sans font-bold text-2xl text-[var(--brand-lime)] placeholder-white/20 p-8 outline-none transition-all resize-y min-h-[250px] shadow-inner ${
                   isBirthing ? 'opacity-50 border-white/10' : 'border-white focus:border-[var(--brand-lime)] focus:shadow-[0_0_0_8px_rgba(212,255,0,0.2)]'
                 }`}
               />
               <div className="absolute bottom-6 right-6 flex items-center gap-6 text-tech text-white/50 bg-black px-4 py-2 border-2 border-white/10">
-                <span className="font-bold">{seedText.length} CHARS</span>
-                <span className="text-[var(--brand-orange)] font-black">⌘+ENTER</span>
+                <span className={`font-bold ${seedText.length > 1800 ? 'text-[var(--brand-orange)]' : ''}`}>{seedText.length}/2000</span>
+                <span className="text-[var(--brand-orange)] font-black hidden sm:block">⌘+ENTER</span>
               </div>
             </div>
 
             {/* Example Seeds */}
             <div className="flex flex-wrap gap-3 mb-12 items-center bg-black/50 p-4 border-2 border-white/10">
-              <span className="text-tech text-[var(--brand-violet)] font-black bg-[var(--brand-violet)]/20 px-2 py-1">TRY SEEDS:</span>
+              <span className="text-tech text-[var(--brand-violet)] font-black bg-[var(--brand-violet)]/20 px-2 py-1">TRY:</span>
               {EXAMPLE_SEEDS.map((seed, i) => (
-                <button key={i}
+                <button
+                  key={i}
                   onClick={() => { setSeedText(seed); textareaRef.current?.focus(); }}
                   className="px-4 py-2 border-2 border-white/10 bg-black font-sans font-bold text-sm text-[var(--text-secondary)] hover:text-black hover:bg-[var(--brand-lime)] hover:border-[var(--brand-lime)] transition-colors max-w-[200px] truncate"
                 >
@@ -290,7 +330,8 @@ export default function CreatePage() {
             {/* Error */}
             <AnimatePresence>
               {error && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                   className="mb-8 bg-[#FF3300] border-4 border-white p-4 flex items-center gap-4 text-white font-sans font-black uppercase shadow-[8px_8px_0_rgba(0,0,0,1)]"
                 >
                   <AlertCircle size={28} className="shrink-0" />
@@ -311,6 +352,13 @@ export default function CreatePage() {
                 <span className="flex items-center gap-4"><Sparkles size={36} /> BIRTH ORGANISM <ArrowRight size={36} /></span>
               )}
             </motion.button>
+
+            {/* Have organisms link */}
+            <div className="mt-6 text-center">
+              <Link href="/organisms" className="text-tech text-[var(--text-tertiary)] hover:text-white transition-colors uppercase tracking-widest text-xs font-bold">
+                VIEW YOUR BIO-STORAGE →
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>
