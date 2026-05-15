@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { supabase } from '@/lib/supabase';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, organismContext, history } = await req.json();
+    const { message, nexusId, organismContext, history } = await req.json();
     if (!message) return NextResponse.json({ error: 'No message provided' }, { status: 400 });
+    if (typeof message !== 'string' || message.length > 2000) return NextResponse.json({ error: 'Message must be a string under 2000 characters' }, { status: 400 });
 
     let parsed;
     try {
@@ -19,7 +21,7 @@ User Command: "${message}"
 Recent Chat History:
 ${history.map((m: any) => `${m.role}: ${m.content}`).join('\n')}
 
-Generate 2-3 responses from different agents reacting to the user command. 
+Generate 2-3 responses from different agents reacting to the user command.
 Roles: innovator, architect, critic, builder, futurist.
 
 Generate a JSON response with EXACTLY this structure (no markdown, just raw JSON):
@@ -57,9 +59,24 @@ Generate a JSON response with EXACTLY this structure (no markdown, just raw JSON
       };
     }
 
+    // Write conversation to episodic_memory (non-blocking — failures are silent)
+    if (nexusId && parsed.responses?.length) {
+      const memoryRows = [
+        { nexus_id: nexusId, role: 'user', content: message },
+        ...parsed.responses.map((r: { role: string; content: string }) => ({
+          nexus_id: nexusId,
+          role: r.role,
+          content: r.content,
+        })),
+      ];
+      supabase.from('episodic_memory').insert(memoryRows).then(({ error }) => {
+        if (error) console.warn('episodic_memory write failed:', error.message);
+      });
+    }
+
     return NextResponse.json(parsed);
   } catch (error: unknown) {
     console.error('Chat error:', error);
-    return NextResponse.json({ error: 'Failed to communicate with Swarm', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to communicate with Swarm' }, { status: 500 });
   }
 }

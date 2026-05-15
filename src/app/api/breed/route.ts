@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
@@ -50,7 +50,28 @@ Return JSON:
       config: { temperature: 1.0, maxOutputTokens: 2048 },
     });
     let text = response.text?.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim() || '';
-    return NextResponse.json(JSON.parse(text));
+    try {
+      return NextResponse.json(JSON.parse(text));
+    } catch {
+      return NextResponse.json({
+        debate: [
+          { agent: 'Nova', side: 'A', argument: 'The first parent brings creative energy.' },
+          { agent: 'Atlas', side: 'B', argument: 'The second parent offers structural depth.' },
+          { agent: 'Cipher', argument: 'Both perspectives merge into something greater.' },
+        ],
+        child: {
+          name: `${organismA.name.slice(0, 4)}-${organismB.name.slice(-4)}`,
+          tagline: `A hybrid of ${organismA.name} and ${organismB.name}`,
+          dna: [
+            { label: 'Hybrid Core', content: 'Merged essence of both parents.', type: 'concept' },
+            { label: 'Emergent Trait', content: 'A new property neither parent possessed.', type: 'mutation' },
+          ],
+          avatar_color: '#D4FF00',
+        },
+        synergies: ['Combined perspectives create novel solutions'],
+        conflicts_resolved: ['Divergent traits unified through creative synthesis'],
+      });
+    }
   } catch (error) {
     console.error('Breed error:', error);
     return NextResponse.json({ error: 'Breeding failed' }, { status: 500 });

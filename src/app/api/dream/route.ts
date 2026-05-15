@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,8 +36,17 @@ Format as JSON:
     });
 
     let text = response.text?.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim() || '';
-    const parsed = JSON.parse(text);
-    return NextResponse.json(parsed);
+    try {
+      const parsed = JSON.parse(text);
+      return NextResponse.json(parsed);
+    } catch {
+      return NextResponse.json({
+        title: 'Dream Vision',
+        narrative: text || 'The organism dreamed of infinite possibility.',
+        fragments: ['Fragment of light', 'A whisper of what could be', 'The seed remembers'],
+        insight: 'Every idea contains multitudes not yet explored.',
+      });
+    }
   } catch (error) {
     console.error('Dream error:', error);
     return NextResponse.json({ error: 'Dream generation failed' }, { status: 500 });

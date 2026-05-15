@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
     const { seedText, seedType } = await req.json();
     if (!seedText) return NextResponse.json({ error: 'No seed provided' }, { status: 400 });
+    if (typeof seedText !== 'string' || seedText.length > 2000) return NextResponse.json({ error: 'Seed must be a string under 2000 characters' }, { status: 400 });
 
     let parsed;
     try {
@@ -74,6 +75,6 @@ Generate a JSON response with EXACTLY this structure (no markdown, no code fence
     return NextResponse.json(parsed);
   } catch (error: unknown) {
     console.error('Birth error:', error);
-    return NextResponse.json({ error: 'Failed to birth organism', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to birth organism' }, { status: 500 });
   }
 }

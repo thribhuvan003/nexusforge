@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
@@ -56,6 +56,6 @@ Generate a JSON response with EXACTLY this structure (no markdown, just raw JSON
     return NextResponse.json(parsed);
   } catch (error: unknown) {
     console.error('Lifecycle error:', error);
-    return NextResponse.json({ error: `Failed to ${req.json().then(j => j.action)} organism`, details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Evolution failed' }, { status: 500 });
   }
 }

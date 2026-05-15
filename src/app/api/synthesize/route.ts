@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+const API_KEY = process.env.GEMINI_API_KEY || '';
 
 export async function POST(req: NextRequest) {
   try {
@@ -58,6 +58,6 @@ Combine their traits. Generate a JSON response with EXACTLY this structure (no m
     return NextResponse.json(parsed);
   } catch (error: unknown) {
     console.error('Synthesis error:', error);
-    return NextResponse.json({ error: 'Failed to synthesize', details: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to synthesize' }, { status: 500 });
   }
 }
