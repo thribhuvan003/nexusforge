@@ -8,7 +8,7 @@ import OrganismAvatar from '@/components/OrganismAvatar';
 import { useStore } from '@/store/useStore';
 import type { NexusCore, DNAStrand, FamilyNode } from '@/types';
 import { AGENT_PROFILES } from '@/types';
-import { Heart, Dna, ArrowRight, Loader2, Sparkles, ChevronLeft } from 'lucide-react';
+import { Heart, Dna, ArrowRight, Loader2, Sparkles, ChevronLeft, AlertCircle } from 'lucide-react';
 import { saveOrganism } from '@/lib/supabase';
 
 interface DebateEntry {
@@ -34,6 +34,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
   const router = useRouter();
   const { organisms, addOrganism, setCurrentOrganism, clearMessages } = useStore();
   const [phase, setPhase] = useState<'select' | 'ritual' | 'debating' | 'merging' | 'born'>('select');
+  const [breedError, setBreedError] = useState('');
   const [parentA, setParentA] = useState<NexusCore | null>(null);
   const [parentB, setParentB] = useState<NexusCore | null>(null);
   const [breedResult, setBreedResult] = useState<BreedResult | null>(null);
@@ -143,6 +144,7 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
       setPhase('born');
     } catch (err) {
       console.error('Breeding failed:', err);
+      setBreedError(err instanceof Error ? err.message : 'Breeding ritual failed. The Swarm could not merge these organisms.');
       setPhase('select');
     }
   };
@@ -206,6 +208,20 @@ export default function BreedPage({ params }: { params: Promise<{ id: string }> 
                   </motion.div>
                 ))}
               </div>
+
+              <AnimatePresence>
+                {breedError && (
+                  <motion.div
+                    key="breed-error"
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="mt-8 bg-[var(--brand-orange)] border-4 border-white p-4 flex items-center gap-4 text-white font-sans font-black uppercase shadow-[8px_8px_0_rgba(0,0,0,1)]"
+                  >
+                    <AlertCircle size={28} className="shrink-0" />
+                    <span className="text-xl tracking-wide">{breedError}</span>
+                    <button onClick={() => setBreedError('')} className="ml-auto text-white/70 hover:text-white text-2xl font-black">×</button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {parentB && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}

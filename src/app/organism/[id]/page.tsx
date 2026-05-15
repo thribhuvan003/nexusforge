@@ -30,14 +30,16 @@ export default function OrganismPage({ params }: { params: Promise<{ id: string 
       fetchOrganismById(id).then((fetchedOrg) => {
         if (fetchedOrg) {
           setOrganism(fetchedOrg);
-          addOrganism(fetchedOrg); // Sync back to store
+          addOrganism(fetchedOrg);
         }
         setIsLoading(false);
       });
     } else {
       setOrganism(storeOrganism);
     }
-  }, [id, storeOrganism, addOrganism]);
+    // addOrganism is a stable Zustand action — intentionally excluded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, storeOrganism]);
 
   const [activeTab, setActiveTab] = useState<Tab>('dna');
   const [isEvolving, setIsEvolving] = useState(false);

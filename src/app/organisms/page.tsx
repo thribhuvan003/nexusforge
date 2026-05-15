@@ -23,8 +23,9 @@ export default function OrganismsPage() {
       setLoading(true);
       fetchPublicOrganisms(10).then(publicOrgs => {
         if (publicOrgs && publicOrgs.length > 0) {
+          const current = useStore.getState().organisms;
           publicOrgs.forEach(org => {
-            if (!organisms.find(o => o.id === org.id)) {
+            if (!current.find(o => o.id === org.id)) {
               addOrganism(org);
             }
           });
