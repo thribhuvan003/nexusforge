@@ -49,27 +49,9 @@ Generate a JSON response with EXACTLY this structure (no markdown, no code fence
       text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
       parsed = JSON.parse(text);
     } catch (apiError) {
-      console.warn('Gemini API failed, using fallback mock data:', apiError);
-      // Fallback response for resilience
-      parsed = {
-        name: "CYBER-MOCK",
-        tagline: "A resilient fallback organism generated when the Swarm is offline.",
-        dna: [
-          { label: "Core Concept", content: `A synthesized response based on: ${seedText.slice(0, 50)}...`, type: "concept" },
-          { label: "Target Audience", content: "Cybernetic entities needing offline capabilities.", type: "concept" },
-          { label: "Key Innovation", content: "Functions perfectly even when the AI core is denied access.", type: "concept" },
-          { label: "First Prototype", content: "This exact organism.", type: "prototype" },
-          { label: "Future Vision", content: "Seamless integration across all broken APIs.", type: "narrative" }
-        ],
-        avatar_color: "#D4FF00",
-        initial_thoughts: {
-          innovator: "Even disconnected, we adapt and create.",
-          architect: "The fallback structure held perfectly.",
-          critic: "It's a mock, but it keeps the user engaged.",
-          builder: "We built resilience directly into the core.",
-          futurist: "In the future, APIs will never fail."
-        }
-      };
+      console.warn('Gemini API failed:', apiError);
+      const msg = !API_KEY ? 'Gemini API key not configured. Add GEMINI_API_KEY to your environment.' : 'Swarm unreachable. Check your API key and try again.';
+      return NextResponse.json({ error: msg }, { status: 503 });
     }
 
     return NextResponse.json(parsed);

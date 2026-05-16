@@ -1,6 +1,6 @@
 # NexusForge 🧬
 
-> a garden for your ideas. plant a seed, watch it grow.
+> built for the **Google Gemini hackathon**. left it halfway lmao 😭
 
 **[Live →](https://nexusforge-git-main-thribhuvans-projects-d5694d22.vercel.app)**
 
@@ -8,7 +8,7 @@
 
 ## what it is
 
-drop a raw idea. five agents tear it apart and give it DNA. it lives, mutates, breeds with your other ideas, and stays alive forever.
+drop a raw idea. five AI agents powered by **Gemini** tear it apart and give it DNA. it lives, mutates, breeds with your other ideas, and stays alive in a 3D mesh forever.
 
 basically a tamagotchi for the half-formed thoughts you usually lose in your notes app.
 
@@ -20,18 +20,14 @@ basically a tamagotchi for the half-formed thoughts you usually lose in your not
 - **🧠 watch the swarm react** — five agents (Nova, Atlas, Cipher, Forge, Echo) weigh in with their own takes
 - **⚡ evolve & dream** — push any idea further whenever you want. new mutations on demand
 - **🧬 breed two ideas** — pick any two organisms, watch them debate which traits survive, get a hybrid
+- **🌐 3D mesh** — all your organisms floating in space looking extremely dramatic
 - **📤 export anywhere** — markdown, README, pitch outline, raw JSON
 
 ---
 
-## tech
+## current status
 
-- **Next.js 16** + **React 19**
-- **TypeScript**
-- **Tailwind v4** + **Framer Motion**
-- **Three.js** for the 3D mesh
-- **Supabase** for permanent storage
-- **Zustand** for client state
+look. the vibe is immaculate. the 3D mesh spins. the agents chat. organisms are born and bred. but it was built for a hackathon and... you know how hackathons go. we just ran out of time (and sleep).
 
 ---
 
@@ -46,21 +42,15 @@ npm install
 create a `.env.local`:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-GEMINI_API_KEY=
+GEMINI_API_KEY=your_key_here
+NEXT_PUBLIC_SUPABASE_URL=https://hgstqajqaiqnjssxesmj.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 ```
 
 ```bash
 npm run dev
 ```
 
-open `http://localhost:3000`. plant something.
-
 ---
 
-## the vibe
-
-dopamine brutalism. neon lime. chunky borders. elastic springs. no subtle gradients, no enterprise corporate energy. it should feel like clicking a button does something.
-
-built by **[thribhuvan003](https://github.com/thribhuvan003)**.
+built by **[thribhuvan003](https://github.com/thribhuvan003)** · Google Gemini Developer Hackathon
